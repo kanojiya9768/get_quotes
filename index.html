@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <title>get Random Quotes</title>
+</head>
+<body>
+    <div class="body">
+        <div class="outer">
+            <div class="inner">
+                <p id="quotes"></p>
+                <p id="author"></p>
+            </div>
+            <div class="btn">
+                <button id="new_q">New Quotes</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let quot = document.getElementById('quotes');
+        let auth = document.getElementById('author');
+
+        let actual_data = "";
+        const get_newquotes = () =>{
+            let rnum = Math.floor(Math.random()*10);
+            quot.innerText=`${actual_data[rnum].text}`;
+            auth.innerText=`${actual_data[rnum].author}`;
+        }
+        const get_data = async() =>{
+            try {
+                let data = await fetch('https://type.fit/api/quotes');
+                actual_data = await data.json();
+                get_newquotes();
+            } catch (error) {
+                console.log(error);
+            }
+        };
+
+        get_data();
+        
+        let btn = document.getElementById('new_q');
+        btn.addEventListener('click',get_newquotes);
+    </script>
+</body>
+</html>
